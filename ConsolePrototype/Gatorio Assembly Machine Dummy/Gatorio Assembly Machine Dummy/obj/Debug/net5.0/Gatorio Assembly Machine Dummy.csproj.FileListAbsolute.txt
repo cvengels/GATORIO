@@ -1,0 +1,16 @@
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\bin\Debug\net5.0\Gatorio Assembly Machine Dummy.exe
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\bin\Debug\net5.0\Gatorio Assembly Machine Dummy.deps.json
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\bin\Debug\net5.0\Gatorio Assembly Machine Dummy.runtimeconfig.json
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\bin\Debug\net5.0\Gatorio Assembly Machine Dummy.runtimeconfig.dev.json
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\bin\Debug\net5.0\Gatorio Assembly Machine Dummy.dll
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\bin\Debug\net5.0\ref\Gatorio Assembly Machine Dummy.dll
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\bin\Debug\net5.0\Gatorio Assembly Machine Dummy.pdb
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\Gatorio Assembly Machine Dummy.csproj.AssemblyReference.cache
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\Gatorio Assembly Machine Dummy.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\Gatorio Assembly Machine Dummy.AssemblyInfoInputs.cache
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\Gatorio Assembly Machine Dummy.AssemblyInfo.cs
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\Gatorio Assembly Machine Dummy.csproj.CoreCompileInputs.cache
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\Gatorio Assembly Machine Dummy.dll
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\ref\Gatorio Assembly Machine Dummy.dll
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\Gatorio Assembly Machine Dummy.pdb
+C:\Users\Christian\Documents\JetBrains\Gatorio Assembly Machine Dummy\Gatorio Assembly Machine Dummy\obj\Debug\net5.0\Gatorio Assembly Machine Dummy.genruntimeconfig.cache
