@@ -13,7 +13,7 @@ namespace Gatorio_Assembly_Machine_Dummy
         private Inventory myInventory;
         private List<Item> myInputItems;
         private Item myProduct;
-        
+
         public int OwnId => ownID;
         public int Stage => stage;
         public Inventory MyInventory => myInventory;
@@ -73,7 +73,8 @@ namespace Gatorio_Assembly_Machine_Dummy
             else
             {
                 Console.WriteLine($"Item {item.ToString()} kann von Automat (ID {ownID}) nicht verarbeitet werden!");
-                Console.WriteLine($"Gültige Eingabe-Items: {String.Join(',', myInputItems.Distinct()).Replace(",", ", ")}");
+                Console.WriteLine(
+                    $"Gültige Eingabe-Items: {String.Join(',', myInputItems.Distinct()).Replace(",", ", ")}");
                 Console.WriteLine();
                 return false;
             }

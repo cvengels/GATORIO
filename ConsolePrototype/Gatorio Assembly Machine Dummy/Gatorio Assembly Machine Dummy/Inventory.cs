@@ -23,6 +23,7 @@ namespace Gatorio_Assembly_Machine_Dummy
                 {
                     myItems.Add(item);
                 }
+
                 Console.WriteLine($"Item {item} {amount} mal ins Inventar von {ownerName} hinzugefügt");
             }
         }

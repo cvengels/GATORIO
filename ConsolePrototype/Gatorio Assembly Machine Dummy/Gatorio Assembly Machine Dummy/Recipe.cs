@@ -23,17 +23,11 @@ namespace Gatorio_Assembly_Machine_Dummy
         public int ProductQuantity => productQuantity;
 
 
-        public Recipe(Item product, int quantity, params object[] ingredients)
-        {
-            new Recipe(product, ingredients);
-            this.productQuantity = quantity;
-        }
-        
-        
         public Recipe(Item product, params object[] ingredients)
         {
             this.ingredients = new List<Item>();
-            
+            this.productQuantity = 1;
+
             // initialize static fields
             if (myRecipes == null)
             {
@@ -62,7 +56,7 @@ namespace Gatorio_Assembly_Machine_Dummy
                             }
                         }
                     }
-                    
+
                     this.ingredients.Sort();
                     this.product = product;
 
@@ -80,7 +74,13 @@ namespace Gatorio_Assembly_Machine_Dummy
                 throw new ArgumentException("Rezept muss mindestens eine Zutat und ein Endprodukt enthalten!");
             }
         }
-        
+
+
+        public Recipe(Item product, int quantity, params object[] ingredients) : this(product, ingredients)
+        {
+            this.productQuantity = quantity;
+        }
+
 
         public static void DeclareItemsNotSelfCraftable(params Item[] myItems)
         {
@@ -98,6 +98,7 @@ namespace Gatorio_Assembly_Machine_Dummy
             }
         }
 
+
         public static Recipe GetRecipeFor(Item product)
         {
             Recipe recipeForItem = myRecipes.FirstOrDefault(r => r.product == product);
@@ -110,6 +111,7 @@ namespace Gatorio_Assembly_Machine_Dummy
             // ... or not (basic ingredient)
             return null;
         }
+
 
         public void WriteBasicRecipe()
         {
@@ -126,12 +128,13 @@ namespace Gatorio_Assembly_Machine_Dummy
             Console.WriteLine(basicItemList);
         }
 
+
         // TODO Calculate product quantity based on a given inventory
         public static int CalculateQuantity(Inventory inventory, Recipe recipe)
         {
             return 0;
         }
-        
+
 
         public static void CalculateBasicItemsForAllRecipes()
         {
@@ -141,25 +144,25 @@ namespace Gatorio_Assembly_Machine_Dummy
             }
         }
 
-        
+
         public static void PrintRecipes()
         {
             Console.WriteLine("Rezepte: ");
 
             foreach (Recipe recipe in myRecipes)
             {
-                string itemString = "\t- " + recipe.product + " = ";
-                IOrderedEnumerable<KeyValuePair<Item, int>> ingredientDict = recipe.ingredients.
-                    GroupBy(x => x)
-                    .ToDictionary(y=>y.Key, y=>y.Count())
+                string itemString = "\t- " + recipe.productQuantity + "x " + recipe.product + " = ";
+                IOrderedEnumerable<KeyValuePair<Item, int>> ingredientDict = recipe.ingredients.GroupBy(x => x)
+                    .ToDictionary(y => y.Key, y => y.Count())
                     .OrderByDescending(z => z.Key.ToString());
                 List<string> ingredientList = new List<string>();
                 foreach (KeyValuePair<Item, int> ingredient in ingredientDict)
                 {
                     ingredientList.Add($"{ingredient.Value}x {ingredient.Key}");
                 }
+
                 itemString += String.Join('+', ingredientList).Replace("+", " + ");
-                
+
                 //itemString += String.Join('+', recipe.ingredients).Replace("+", " + ");
                 Console.WriteLine(itemString);
 
@@ -185,6 +188,7 @@ namespace Gatorio_Assembly_Machine_Dummy
 
             Console.WriteLine();
         }
+
 
         public int CompareTo(Recipe other)
         {

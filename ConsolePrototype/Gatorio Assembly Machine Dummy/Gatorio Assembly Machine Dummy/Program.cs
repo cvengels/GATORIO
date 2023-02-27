@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 // ReSharper disable ObjectCreationAsStatement
 
 namespace Gatorio_Assembly_Machine_Dummy
@@ -20,9 +20,10 @@ namespace Gatorio_Assembly_Machine_Dummy
             Recipe.DeclareItemsNotSelfCraftable(Item.MetalOre);
 
             Recipe.CalculateBasicItemsForAllRecipes();
-            
+
             Recipe.PrintRecipes();
 
+            /*
             Inventory myInventory = new Inventory("Player");
 
 
@@ -62,7 +63,7 @@ namespace Gatorio_Assembly_Machine_Dummy
             });
             myInventory.AddItem(fishFoodMaker.Produce());
             Console.WriteLine(myInventory);
-
+            */
         }
     }
 }
