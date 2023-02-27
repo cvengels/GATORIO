@@ -35,6 +35,14 @@ namespace Gatorio_Assembly_Machine_Dummy
             }
         }
 
+        public void AddItems(KeyValuePair<Item, uint> items)
+        {
+            for (int i = 0; i < items.Value; i++)
+            {
+                AddItem(items.Key);
+            }
+        }
+
         public Item GetItem(Item item)
         {
             if (myItems.Contains(item))

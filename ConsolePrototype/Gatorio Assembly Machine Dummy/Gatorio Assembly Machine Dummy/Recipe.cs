@@ -4,25 +4,37 @@ using System.Linq;
 
 namespace Gatorio_Assembly_Machine_Dummy
 {
-    public class Recipe : IComparable<Recipe>
+    public class Recipe : ItemUtils, IComparable<Recipe>
     {
         private static List<Item> nonSelfCraftableItems; // Which items can't be crafted by the player?
         private static List<Recipe> myRecipes;
 
         private List<Item> ingredients;
         private Item product;
+        private int productQuantity;
+
+
         private Dictionary<Item, int> basicIngredients;
 
         public static List<Item> NonSelfCraftableItems => nonSelfCraftableItems;
         public static List<Recipe> MyRecipes => myRecipes;
         public List<Item> Ingredients => ingredients;
         public Item Product => product;
+        public int ProductQuantity => productQuantity;
 
+
+        public Recipe(Item product, int quantity, params object[] ingredients)
+        {
+            new Recipe(product, ingredients);
+            this.productQuantity = quantity;
+        }
+        
         
         public Recipe(Item product, params object[] ingredients)
         {
             this.ingredients = new List<Item>();
             
+            // Static variables initialized
             if (myRecipes == null)
             {
                 myRecipes = new List<Recipe>();
@@ -42,11 +54,11 @@ namespace Gatorio_Assembly_Machine_Dummy
                             this.ingredients.Add((Item)ingredient);
                         }
 
-                        else if (ingredient is KeyValuePair<Item, int>)
+                        else if (ingredient is KeyValuePair<Item, int> pair)
                         {
-                            for (int i = 0; i < ((KeyValuePair<Item, int>)ingredient).Value; i++)
+                            for (int i = 0; i < (pair.Value); i++)
                             {
-                                this.ingredients.Add(((KeyValuePair<Item, int>) ingredient).Key);
+                                this.ingredients.Add(pair.Key);
                             }
                         }
                     }
@@ -68,6 +80,7 @@ namespace Gatorio_Assembly_Machine_Dummy
                 throw new ArgumentException("Rezept muss mindestens eine Zutat und ein Endprodukt enthalten!");
             }
         }
+        
 
         public static void DeclareItemsNotSelfCraftable(params Item[] myItems)
         {
@@ -113,43 +126,24 @@ namespace Gatorio_Assembly_Machine_Dummy
             Console.WriteLine(basicItemList);
         }
 
-        public static void CalculateBasicItems()
+        
+        public static int CalculateQuantity(Inventory inventory, Recipe recipe)
+        {
+            return 0;
+        }
+
+        
+
+
+        public static void CalculateBasicItemsForAllRecipes()
         {
             foreach (Recipe mainRecipe in myRecipes)
             {
-                List<Item> basicItemList = new List<Item>(mainRecipe.ingredients);
-                bool stillHasRecipe = false;
-
-                do
-                {
-                    for (int i = basicItemList.Count - 1; i >= 0; i--)
-                    {
-                        stillHasRecipe = false;
-                        Recipe testedItem = GetRecipeFor(basicItemList[i]);
-                        if (testedItem != null)
-                        {
-                            stillHasRecipe = true;
-                            basicItemList.AddRange(testedItem.ingredients);
-                            basicItemList.Remove(basicItemList[i]);
-                            break;
-                        }
-                    }
-                } while (stillHasRecipe);
-
-                foreach (Item item in basicItemList)
-                {
-                    if (!mainRecipe.basicIngredients.ContainsKey(item))
-                    {
-                        mainRecipe.basicIngredients.Add(item, 1);
-                    }
-                    else
-                    {
-                        mainRecipe.basicIngredients[item]++;
-                    }
-                }
+                mainRecipe.basicIngredients = GetBasicItems(mainRecipe);
             }
         }
 
+        
         public static void PrintRecipes()
         {
             Console.WriteLine("Rezepte: ");

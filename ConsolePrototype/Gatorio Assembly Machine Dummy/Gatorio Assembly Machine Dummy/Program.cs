@@ -8,7 +8,7 @@ namespace Gatorio_Assembly_Machine_Dummy
         static void Main(string[] args)
         {
             new Recipe(Item.MetalSheet, Item.MetalOre);
-            new Recipe(Item.Paper, Item.Wood, Item.Water);
+            new Recipe(Item.Paper, 2, Item.Wood, Item.Water);
             new Recipe(Item.TinCan, Item.MetalSheet, Item.Paper);
             new Recipe(Item.CannedFish, Item.TinCan, Item.Water, Item.Fish);
             new Recipe(Item.CardboardBox, KeyValuePair.Create(Item.Paper, 10), Item.Water);
@@ -18,7 +18,7 @@ namespace Gatorio_Assembly_Machine_Dummy
 
             Recipe.DeclareItemsNotSelfCraftable(Item.MetalOre);
 
-            Recipe.CalculateBasicItems();
+            Recipe.CalculateBasicItemsForAllRecipes();
             
             Recipe.PrintRecipes();
 
