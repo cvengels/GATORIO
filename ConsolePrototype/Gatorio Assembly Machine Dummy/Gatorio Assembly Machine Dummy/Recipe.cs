@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Gatorio_Assembly_Machine_Dummy
 {
-    public class Recipe : ItemUtils, IComparable<Recipe>
+    public class Recipe : IComparable<Recipe>
     {
         private static List<Item> nonSelfCraftableItems; // Which items can't be crafted by the player?
         private static List<Recipe> myRecipes;
@@ -34,7 +34,7 @@ namespace Gatorio_Assembly_Machine_Dummy
         {
             this.ingredients = new List<Item>();
             
-            // Static variables initialized
+            // initialize static fields
             if (myRecipes == null)
             {
                 myRecipes = new List<Recipe>();
@@ -126,20 +126,18 @@ namespace Gatorio_Assembly_Machine_Dummy
             Console.WriteLine(basicItemList);
         }
 
-        
+        // TODO Calculate product quantity based on a given inventory
         public static int CalculateQuantity(Inventory inventory, Recipe recipe)
         {
             return 0;
         }
-
         
-
 
         public static void CalculateBasicItemsForAllRecipes()
         {
             foreach (Recipe mainRecipe in myRecipes)
             {
-                mainRecipe.basicIngredients = GetBasicItems(mainRecipe);
+                mainRecipe.basicIngredients = ItemUtils.ItemListToDictionary(ItemUtils.GetBasicItems(mainRecipe));
             }
         }
 

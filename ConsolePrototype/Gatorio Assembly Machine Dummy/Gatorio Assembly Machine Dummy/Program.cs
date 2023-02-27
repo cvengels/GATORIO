@@ -1,5 +1,6 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
+// ReSharper disable ObjectCreationAsStatement
 
 namespace Gatorio_Assembly_Machine_Dummy
 {
@@ -11,7 +12,7 @@ namespace Gatorio_Assembly_Machine_Dummy
             new Recipe(Item.Paper, 2, Item.Wood, Item.Water);
             new Recipe(Item.TinCan, Item.MetalSheet, Item.Paper);
             new Recipe(Item.CannedFish, Item.TinCan, Item.Water, Item.Fish);
-            new Recipe(Item.CardboardBox, KeyValuePair.Create(Item.Paper, 10), Item.Water);
+            new Recipe(Item.CardboardBox, KeyValuePair.Create(Item.Paper, 4), Item.Water);
             new Recipe(Item.PackOfCannedFish, KeyValuePair.Create(Item.CannedFish, 36), Item.CardboardBox);
 
             //Recipe.PrintRecipes();
@@ -22,17 +23,9 @@ namespace Gatorio_Assembly_Machine_Dummy
             
             Recipe.PrintRecipes();
 
-            /*
-            Console.WriteLine("Benötigte Grundzutaten für alle Rezepte:");
-            foreach (var myRecipe in Recipe.MyRecipes)
-            {
-                myRecipe.WriteBasicRecipe();
-            }
-            */
-
             Inventory myInventory = new Inventory("Player");
 
-            /*
+
             AssemblyMachine metalsheetFabricator = new AssemblyMachine(2, Recipe.GetRecipeFor(Item.MetalSheet));
             metalsheetFabricator.InputIngredient(Item.MetalOre, 10);
             Console.WriteLine(metalsheetFabricator.ToString());
@@ -69,7 +62,7 @@ namespace Gatorio_Assembly_Machine_Dummy
             });
             myInventory.AddItem(fishFoodMaker.Produce());
             Console.WriteLine(myInventory);
-            */
+
         }
     }
 }
