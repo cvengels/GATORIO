@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 // ReSharper disable ObjectCreationAsStatement
 
@@ -8,25 +10,45 @@ namespace Gatorio_Assembly_Machine_Dummy
     {
         static void Main(string[] args)
         {
+            
             new Recipe(Item.MetalSheet, Item.MetalOre);
             new Recipe(Item.Paper, 2, Item.Wood, Item.Water);
             new Recipe(Item.TinCan, Item.MetalSheet, Item.Paper);
             new Recipe(Item.CannedFish, Item.TinCan, Item.Water, Item.Fish);
+            new Recipe(Item.CannedFishPremium, Item.TinCan, Item.Water, Item.Fish, Item.CatNip);
             new Recipe(Item.CardboardBox, KeyValuePair.Create(Item.Paper, 4), Item.Water);
             new Recipe(Item.PackOfCannedFish, KeyValuePair.Create(Item.CannedFish, 36), Item.CardboardBox);
+            new Recipe(Item.PackOfCannedFishPremium, KeyValuePair.Create(Item.CannedFishPremium, 12), Item.CardboardBox);
 
             //Recipe.PrintRecipes();
 
             Recipe.DeclareItemsNotSelfCraftable(Item.MetalOre);
 
             Recipe.CalculateBasicItemsForAllRecipes();
-
+            
             Recipe.PrintRecipes();
-
-            /*
+            
             Inventory myInventory = new Inventory("Player");
 
+            for (int i = 0; i < 1000; i++)
+            {
+                myInventory.AddItems(new List<Item>
+                {
+                    Item.Fish, Item.Wood, Item.Water, Item.MetalOre
+                }
+                );
+            }
+            
+            myInventory.AddItem(Item.CatNip, 120);
 
+            foreach (Recipe recipe in Recipe.MyRecipes)
+            {
+                int inventoryAmount = ItemUtils.GetAmountOfItemsToProduce(myInventory, recipe);
+                Console.WriteLine($"Produkt {recipe.Product.ToString()} {inventoryAmount}x herstellbar mit Inventar von {myInventory.OwnerName}");
+            }
+
+            
+            /*
             AssemblyMachine metalsheetFabricator = new AssemblyMachine(2, Recipe.GetRecipeFor(Item.MetalSheet));
             metalsheetFabricator.InputIngredient(Item.MetalOre, 10);
             Console.WriteLine(metalsheetFabricator.ToString());

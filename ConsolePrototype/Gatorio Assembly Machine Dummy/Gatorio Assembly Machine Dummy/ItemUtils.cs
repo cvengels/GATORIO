@@ -9,7 +9,7 @@ namespace Gatorio_Assembly_Machine_Dummy
         {
             List<Item> itemList = new List<Item>(items);
             bool stillHasRecipe = false;
-
+            
             do
             {
                 for (int i = itemList.Count - 1; i >= 0; i--)
@@ -33,6 +33,40 @@ namespace Gatorio_Assembly_Machine_Dummy
         public static List<Item> GetBasicItems(Recipe recipe)
         {
             return GetBasicItems(recipe.Ingredients);
+        }
+
+        public static List<Item> GetBasicItems(Inventory inventory)
+        {
+            return GetBasicItems(inventory.MyItems);
+        }
+
+
+        public static int GetAmountOfItemsToProduce(Inventory inventory, Recipe recipe)
+        {
+            List<Item> basicsInventory = new List<Item>(GetBasicItems(inventory));
+            List<Item> basicsRecipe = new List<Item>(GetBasicItems(recipe));
+            int amount = 0;
+            bool canBeProduced = false;
+            
+            do
+            {
+                foreach (Item basicsRecipeItem in basicsRecipe)
+                {
+                    if (!basicsInventory.Remove(basicsRecipeItem))
+                    {
+                        canBeProduced = false;
+                        break;
+                    }
+                    canBeProduced = true;
+                }
+
+                if (canBeProduced)
+                {
+                    amount++;
+                }
+            } while (canBeProduced);
+            
+            return amount;
         }
 
 

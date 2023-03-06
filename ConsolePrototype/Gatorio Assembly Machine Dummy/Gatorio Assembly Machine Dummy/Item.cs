@@ -10,8 +10,11 @@
         Paper,
         TinCan,
         Fish,
+        CatNip,
         CannedFish,
+        CannedFishPremium,
         PackOfCannedFish,
+        PackOfCannedFishPremium,
         CardboardBox
     }
 }

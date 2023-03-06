@@ -8,19 +8,19 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Christian\\.nuget\\packages\\": {}
+    "C:\\Users\\Christian.Vengels\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Christian\\Desktop\\Dev Foo\\GATORIO\\ConsolePrototype\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy.csproj",
+      "projectUniqueName": "C:\\Users\\Christian.Vengels\\Documents\\Unity Tests\\GATORIO\\ConsolePrototype\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy.csproj",
       "projectName": "Gatorio Assembly Machine Dummy",
-      "projectPath": "C:\\Users\\Christian\\Desktop\\Dev Foo\\GATORIO\\ConsolePrototype\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy.csproj",
-      "packagesPath": "C:\\Users\\Christian\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Christian\\Desktop\\Dev Foo\\GATORIO\\ConsolePrototype\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy\\obj\\",
+      "projectPath": "C:\\Users\\Christian.Vengels\\Documents\\Unity Tests\\GATORIO\\ConsolePrototype\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy.csproj",
+      "packagesPath": "C:\\Users\\Christian.Vengels\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Christian.Vengels\\Documents\\Unity Tests\\GATORIO\\ConsolePrototype\\Gatorio Assembly Machine Dummy\\Gatorio Assembly Machine Dummy\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Christian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Christian.Vengels\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -60,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

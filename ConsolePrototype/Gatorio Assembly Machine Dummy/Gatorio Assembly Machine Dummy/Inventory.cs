@@ -7,8 +7,11 @@ namespace Gatorio_Assembly_Machine_Dummy
     {
         private string ownerName;
         private List<Item> myItems;
+        
+        public string OwnerName => ownerName;
         public List<Item> MyItems => myItems;
 
+        
         public Inventory(string ownerName)
         {
             this.ownerName = ownerName;
@@ -24,7 +27,7 @@ namespace Gatorio_Assembly_Machine_Dummy
                     myItems.Add(item);
                 }
 
-                Console.WriteLine($"Item {item} {amount} mal ins Inventar von {ownerName} hinzugefügt");
+                //Console.WriteLine($"Item {item} {amount} mal ins Inventar von {ownerName} hinzugefügt");
             }
         }
 
@@ -36,7 +39,16 @@ namespace Gatorio_Assembly_Machine_Dummy
             }
         }
 
-        public void AddItems(KeyValuePair<Item, uint> items)
+
+        public void AddItems(Dictionary<Item, int> items)
+        {
+            foreach (KeyValuePair<Item, int> itemAmountPair in items)
+            {
+                AddItems(itemAmountPair);
+            }
+        }
+
+        public void AddItems(KeyValuePair<Item, int> items)
         {
             for (int i = 0; i < items.Value; i++)
             {
