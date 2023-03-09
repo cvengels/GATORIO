@@ -9,40 +9,64 @@ namespace Gatorio_Assembly_Machine_Dummy
         private static List<Item> nonSelfCraftableItems; // Which items can't be crafted by the player?
         private static List<Recipe> myRecipes;
 
-
         private List<Item> ingredients;
         private Item product;
+        private int productQuantity;
+
+
         private Dictionary<Item, int> basicIngredients;
 
-        
-        public List<Item> NonSelfCraftableItems => nonSelfCraftableItems;
+        public static List<Item> NonSelfCraftableItems => nonSelfCraftableItems;
         public static List<Recipe> MyRecipes => myRecipes;
         public List<Item> Ingredients => ingredients;
         public Item Product => product;
-        
-        public Recipe(List<Item> ingredients, Item product)
+        public int ProductQuantity => productQuantity;
+
+
+        public Recipe(Item product, params object[] ingredients)
         {
+            this.ingredients = new List<Item>();
+            this.productQuantity = 1;
+
+            // initialize static fields
             if (myRecipes == null)
             {
                 myRecipes = new List<Recipe>();
                 nonSelfCraftableItems = new List<Item>();
             }
-            
+
             if (ingredients != null && product != Item.None)
             {
                 if (myRecipes.FirstOrDefault(r => r.product == product) == null)
                 {
                     basicIngredients = new Dictionary<Item, int>();
-                    this.ingredients = ingredients;
+
+                    foreach (var ingredient in ingredients)
+                    {
+                        if (ingredient is Item)
+                        {
+                            this.ingredients.Add((Item)ingredient);
+                        }
+
+                        else if (ingredient is KeyValuePair<Item, int> pair)
+                        {
+                            for (int i = 0; i < (pair.Value); i++)
+                            {
+                                this.ingredients.Add(pair.Key);
+                            }
+                        }
+                    }
+
                     this.ingredients.Sort();
                     this.product = product;
-                    
+
                     myRecipes.Add(this);
                     myRecipes.Sort();
                 }
                 else
                 {
-                    throw new ArgumentException($"Rezept für das Endprodukt {this.product.ToString()} bereits vorhanden!");
+                    throw new ArgumentException(
+                        $"Rezept für das Endprodukt {this.product.ToString()} bereits vorhanden!");
                 }
             }
             else
@@ -50,6 +74,13 @@ namespace Gatorio_Assembly_Machine_Dummy
                 throw new ArgumentException("Rezept muss mindestens eine Zutat und ein Endprodukt enthalten!");
             }
         }
+
+
+        public Recipe(Item product, int quantity, params object[] ingredients) : this(product, ingredients)
+        {
+            this.productQuantity = quantity;
+        }
+
 
         public static void DeclareItemsNotSelfCraftable(params Item[] myItems)
         {
@@ -62,9 +93,11 @@ namespace Gatorio_Assembly_Machine_Dummy
                         nonSelfCraftableItems.Add(item);
                     }
                 }
+
                 nonSelfCraftableItems = nonSelfCraftableItems.OrderBy(item => item.ToString()).ToList();
             }
         }
+
 
         public static Recipe GetRecipeFor(Item product)
         {
@@ -74,19 +107,11 @@ namespace Gatorio_Assembly_Machine_Dummy
                 // Item has a recipe ...
                 return recipeForItem;
             }
+
             // ... or not (basic ingredient)
             return null;
         }
 
-        /*
-        public static void ParseAllRecipesForBasicIngredients()
-        {
-            foreach (var recipe in myRecipes)
-            {
-                CalculateBasicItems();
-            }
-        }
-        */
 
         public void WriteBasicRecipe()
         {
@@ -97,43 +122,21 @@ namespace Gatorio_Assembly_Machine_Dummy
             {
                 individualIngredients.Add(basicIngredient.Value + "x " + basicIngredient.Key);
             }
+
             basicItemList += String.Join(',', individualIngredients).Replace(",", ", ");
-            
+
             Console.WriteLine(basicItemList);
         }
-        
-        public void CalculateBasicItems(params Dictionary<Item, int>[] parentIngredients)
+
+
+        public static void CalculateBasicItemsForAllRecipes()
         {
-            foreach (var ingredient in ingredients)
+            foreach (Recipe mainRecipe in myRecipes)
             {
-                Recipe subRecipe = GetRecipeFor(ingredient);
-                if (subRecipe == null && !nonSelfCraftableItems.Contains(ingredient)) // Ingredient has no further recipe
-                {
-                    foreach (var dict in parentIngredients)
-                    {
-                        InsertInDictionary(ingredient, dict);
-                    }
-                    InsertInDictionary(ingredient, basicIngredients);
-                }
-                else // Ingredient has a sub-recipe
-                {
-                    parentIngredients = parentIngredients.Append(basicIngredients).ToArray();
-                    subRecipe.CalculateBasicItems(parentIngredients);
-                }
+                mainRecipe.basicIngredients = ItemUtils.ItemListToDictionary(ItemUtils.GetBasicItems(mainRecipe));
             }
         }
 
-        private void InsertInDictionary(Item ingredient, Dictionary<Item, int> parentIngredients)
-        {
-            if (parentIngredients.ContainsKey(ingredient)) // Is the ingredient already in our dictionary?
-            {
-                parentIngredients[ingredient]++;
-            }
-            else // If not, create a key and start value
-            {
-                parentIngredients.Add(ingredient, 1);
-            }
-        }
 
         public static void PrintRecipes()
         {
@@ -141,10 +144,31 @@ namespace Gatorio_Assembly_Machine_Dummy
 
             foreach (Recipe recipe in myRecipes)
             {
-                string itemString = recipe.product + " = ";
-                itemString += String.Join('+', recipe.ingredients).Replace("+", " + ");
+                string itemString = "\t- " + recipe.productQuantity + "x " + recipe.product + " = ";
+                IOrderedEnumerable<KeyValuePair<Item, int>> ingredientDict = recipe.ingredients.GroupBy(x => x)
+                    .ToDictionary(y => y.Key, y => y.Count())
+                    .OrderByDescending(z => z.Key.ToString());
+                List<string> ingredientList = new List<string>();
+                foreach (KeyValuePair<Item, int> ingredient in ingredientDict)
+                {
+                    ingredientList.Add($"{ingredient.Value}x {ingredient.Key}");
+                }
+
+                itemString += String.Join('+', ingredientList).Replace("+", " + ");
+
+                //itemString += String.Join('+', recipe.ingredients).Replace("+", " + ");
                 Console.WriteLine(itemString);
+
+                List<string> basicIngredientList = new List<string>();
+                foreach (KeyValuePair<Item, int> basicItem in recipe.basicIngredients)
+                {
+                    basicIngredientList.Add($"{basicItem.Value}x {basicItem.Key}");
+                }
+
+                itemString = String.Join(',', basicIngredientList).Replace(",", ", ");
+                Console.WriteLine($"\t\t({itemString})");
             }
+
             Console.WriteLine();
 
             if (nonSelfCraftableItems.Count > 0)
@@ -154,13 +178,15 @@ namespace Gatorio_Assembly_Machine_Dummy
                 itemString += String.Join(',', nonSelfCraftableItems).Replace(",", ", ");
                 Console.WriteLine(itemString);
             }
-            
+
             Console.WriteLine();
         }
 
+
         public int CompareTo(Recipe other)
         {
-            return String.Compare(this.product.ToString(), other.product.ToString(), StringComparison.OrdinalIgnoreCase);
+            return String.Compare(this.product.ToString(), other.product.ToString(),
+                StringComparison.OrdinalIgnoreCase);
         }
     }
 }

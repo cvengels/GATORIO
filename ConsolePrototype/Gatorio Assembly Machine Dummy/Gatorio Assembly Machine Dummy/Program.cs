@@ -10,7 +10,6 @@ namespace Gatorio_Assembly_Machine_Dummy
     {
         static void Main(string[] args)
         {
-            
             new Recipe(Item.MetalSheet, Item.MetalOre);
             new Recipe(Item.Paper, 2, Item.Wood, Item.Water);
             new Recipe(Item.TinCan, Item.MetalSheet, Item.Paper);
@@ -30,6 +29,8 @@ namespace Gatorio_Assembly_Machine_Dummy
             
             Inventory myInventory = new Inventory("Player");
 
+            
+            /*
             for (int i = 0; i < 1000; i++)
             {
                 myInventory.AddItems(new List<Item>
@@ -48,7 +49,7 @@ namespace Gatorio_Assembly_Machine_Dummy
             }
 
             
-            /*
+            
             AssemblyMachine metalsheetFabricator = new AssemblyMachine(2, Recipe.GetRecipeFor(Item.MetalSheet));
             metalsheetFabricator.InputIngredient(Item.MetalOre, 10);
             Console.WriteLine(metalsheetFabricator.ToString());

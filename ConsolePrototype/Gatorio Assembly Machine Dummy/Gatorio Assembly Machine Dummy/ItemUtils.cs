@@ -5,11 +5,10 @@ namespace Gatorio_Assembly_Machine_Dummy
 {
     public static class ItemUtils
     {
-        public static List<Item> GetBasicItems(List<Item> items)
+        public static void GetBasicItems(ref Dictionary<Item, int> items, out Dictionary<Item, int> basicItems)
         {
-            List<Item> itemList = new List<Item>(items);
             bool stillHasRecipe = false;
-            
+
             do
             {
                 for (int i = itemList.Count - 1; i >= 0; i--)
@@ -25,79 +24,110 @@ namespace Gatorio_Assembly_Machine_Dummy
                     }
                 }
             } while (stillHasRecipe);
-
-            return itemList;
         }
 
 
-        public static List<Item> GetBasicItems(Recipe recipe)
+        public static Dictionary<Item, int> GetBasicItems(Recipe recipe)
         {
             return GetBasicItems(recipe.Ingredients);
         }
 
-        public static List<Item> GetBasicItems(Inventory inventory)
+        public static Dictionary<Item, int> GetBasicItems(Inventory inventory)
         {
             return GetBasicItems(inventory.MyItems);
         }
 
 
-        public static int GetAmountOfItemsToProduce(Inventory inventory, Recipe recipe)
+        public static void AddToItemDict(ref Dictionary<Item, int> source, KeyValuePair<Item, int> item)
         {
-            List<Item> basicsInventory = new List<Item>(GetBasicItems(inventory));
-            List<Item> basicsRecipe = new List<Item>(GetBasicItems(recipe));
-            int amount = 0;
-            bool canBeProduced = false;
-            
-            do
+            if (!source.ContainsKey(item.Key))
             {
-                foreach (Item basicsRecipeItem in basicsRecipe)
-                {
-                    if (!basicsInventory.Remove(basicsRecipeItem))
-                    {
-                        canBeProduced = false;
-                        break;
-                    }
-                    canBeProduced = true;
-                }
-
-                if (canBeProduced)
-                {
-                    amount++;
-                }
-            } while (canBeProduced);
-            
-            return amount;
+                source.Add(item.Key, item.Value);
+            }
+            else
+            {
+                source[item.Key] += item.Value;
+            }
+        }
+        
+        
+        public static void AddToItemDict(ref Dictionary<Item, int> source, Item item)
+        {
+            AddToItemDict(ref source, new KeyValuePair<Item, int>(item, 1));
         }
 
-
-        public static Dictionary<Item, int> ItemListToDictionary(List<Item> itemList)
+        
+        public static void AddToItemDict(ref Dictionary<Item, int> source, Dictionary<Item, int> items)
         {
-            Dictionary<Item, int> newBasicItemDict = new Dictionary<Item, int>();
-            foreach (Item item in itemList)
+            foreach (KeyValuePair<Item, int> itemPair in items)
             {
-                if (!newBasicItemDict.ContainsKey(item))
+                AddToItemDict(ref source, itemPair);
+            }
+        }
+
+        
+        public static bool SubFromItemDict(ref Dictionary<Item, int> source, KeyValuePair<Item, int> item)
+        {
+            if (source.ContainsKey(item.Key))
+            {
+                source[item.Key] -= item.Value;
+                if (source[item.Key] >= 0)
                 {
-                    newBasicItemDict.Add(item, 1);
+                    if (source[item.Key] == 0)
+                    {
+                        source.Remove(item.Key);
+                    }
+                    return true;
+                }
+
+                source[item.Key] += item.Value;
+            }
+            
+            return false;
+        }
+
+        public static bool SubFromItemDict(ref Dictionary<Item, int> source, Item item)
+        {
+            return SubFromItemDict(ref source, new KeyValuePair<Item, int>(item, 1));
+        }
+
+        public static bool SubFromItemDict(ref Dictionary<Item, int> source, Dictionary<Item, int> items)
+        {
+            bool canContinue = false;
+            
+            foreach (KeyValuePair<Item, int> itemPair in source)
+            {
+                if (SubFromItemDict(ref source, itemPair))
+                {
+                    canContinue = true;
                 }
                 else
                 {
-                    newBasicItemDict[item]++;
+                    canContinue = false;
+                    break;
                 }
             }
 
-            return newBasicItemDict;
+            return canContinue;
         }
+        
 
-
-        public static List<Item> ItemCollectionToList(Dictionary<Item, int> itemDictionary)
+        // TODO fix for dictionary structure
+        public static int GetAmountOfItemsToProduce(Inventory inventory, Recipe recipe)
         {
-            List<Item> newItemList = new List<Item>();
-            foreach (KeyValuePair<Item, int> itemPair in itemDictionary)
-            {
-                newItemList.AddRange(Enumerable.Repeat(itemPair.Key, itemPair.Value));
-            }
+            Dictionary<Item, int> basicsInventory = new Dictionary<Item, int>(GetBasicItems(inventory));
+            Dictionary<Item, int> basicsRecipe = new Dictionary<Item, int>(GetBasicItems(recipe));
+            int amount = 0;
+            bool canBeProduced = false;
 
-            return newItemList;
+            do
+            {
+                foreach (KeyValuePair<Item, int> basicsRecipeItem in basicsRecipe)
+                {
+                }
+            } while (canBeProduced);
+
+            return amount;
         }
     }
 }
