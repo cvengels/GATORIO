@@ -5,10 +5,23 @@ namespace Gatorio_Assembly_Machine_Dummy
 {
     public static class ItemUtils
     {
-        public static void GetBasicItems(ref Dictionary<Item, int> items, out Dictionary<Item, int> basicItems)
+        public static void GetBasicItems(ref Dictionary<Item, int> items, ref Dictionary<Item, int> basicItems)
         {
             bool stillHasRecipe = false;
+            foreach (KeyValuePair<Item, int> item in items)
+            {
+                AddToItemDict(ref basicItems, item);
+            }
 
+            do
+            {
+                foreach (KeyValuePair<Item, int> item in basicItems)
+                {
+                    
+                }
+            } while (stillHasRecipe);
+
+            /*
             do
             {
                 for (int i = itemList.Count - 1; i >= 0; i--)
@@ -24,20 +37,22 @@ namespace Gatorio_Assembly_Machine_Dummy
                     }
                 }
             } while (stillHasRecipe);
+            */
         }
 
-
+        /*
         public static Dictionary<Item, int> GetBasicItems(Recipe recipe)
         {
             return GetBasicItems(recipe.Ingredients);
         }
 
-        public static Dictionary<Item, int> GetBasicItems(Inventory inventory)
+        public static void GetBasicItems(ref Inventory inventory, ref Dictionary<Item, int> basicItems)
         {
-            return GetBasicItems(inventory.MyItems);
+            //GetBasicItems(inventory);
         }
-
-
+        */
+        
+        
         public static void AddToItemDict(ref Dictionary<Item, int> source, KeyValuePair<Item, int> item)
         {
             if (!source.ContainsKey(item.Key))
@@ -50,13 +65,16 @@ namespace Gatorio_Assembly_Machine_Dummy
             }
         }
         
-        
+        public static void AddToItemDict(ref Dictionary<Item, int> source, Item item, int amount)
+        {
+            AddToItemDict(ref source, new KeyValuePair<Item, int>(item, amount));
+        }
+
         public static void AddToItemDict(ref Dictionary<Item, int> source, Item item)
         {
             AddToItemDict(ref source, new KeyValuePair<Item, int>(item, 1));
         }
 
-        
         public static void AddToItemDict(ref Dictionary<Item, int> source, Dictionary<Item, int> items)
         {
             foreach (KeyValuePair<Item, int> itemPair in items)
@@ -64,8 +82,8 @@ namespace Gatorio_Assembly_Machine_Dummy
                 AddToItemDict(ref source, itemPair);
             }
         }
-
         
+
         public static bool SubFromItemDict(ref Dictionary<Item, int> source, KeyValuePair<Item, int> item)
         {
             if (source.ContainsKey(item.Key))
